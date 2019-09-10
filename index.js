@@ -7,7 +7,7 @@ const importLazy = require('import-lazy')(require);
 const configstore = importLazy('configstore');
 const chalk = importLazy('chalk');
 const semverDiff = importLazy('semver-diff');
-const latestVersion = importLazy('latest-version');
+const latestVersion = importLazy('latest-version2');
 const isNpm = importLazy('is-npm');
 const isInstalledGlobally = importLazy('is-installed-globally');
 const isYarnGlobal = importLazy('is-yarn-global');
@@ -109,8 +109,9 @@ class UpdateNotifier {
 	}
 
 	async checkNpm() {
-		const {distTag} = this.options;
-		const latest = await latestVersion()(this.packageName, {version: distTag});
+		const {distTag, registryUrl} = this.options;
+		console.log('registry', registryUrl);
+		const latest = await latestVersion()(this.packageName, {version: distTag, registryUrl});
 
 		return {
 			latest,
@@ -142,6 +143,8 @@ class UpdateNotifier {
 		} else {
 			installCommand = `npm i ${this.packageName}`;
 		}
+
+		installCommand = options.installCommand || this.options.installCommand
 
 		options.message = options.message || 'Update available ' + chalk().dim(this.update.current) + chalk().reset(' → ') +
 			chalk().green(this.update.latest) + ' \nRun ' + chalk().cyan(installCommand) + ' to update';
