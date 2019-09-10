@@ -1,6 +1,6 @@
 {
 	"name": "update-notifier2",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "Update notifications for your CLI app",
 	"license": "BSD-2-Clause",
 	"repository": "yeoman/update-notifier",
